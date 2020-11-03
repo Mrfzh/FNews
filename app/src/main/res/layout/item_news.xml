@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:minHeight="120dp"
+    android:maxHeight="120dp">
+
+    <TextView
+        android:id="@+id/tv_item_news_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="电费出卖运营商：5G基站成“电老虎”，为省钱有基站搞夜间休眠"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:layout_toStartOf="@id/iv_item_news_pic"
+        android:layout_alignParentStart="true"
+        android:maxLines="3"/>
+
+    
+    <ImageView
+        android:id="@+id/iv_item_news_pic"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:src="@drawable/news_image"
+        android:layout_marginEnd="10dp"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/tv_item_news_src"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AI财经社"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_item_news_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2020-11-03 08:54:00"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/iv_item_news_pic"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"/>
+
+</RelativeLayout>
