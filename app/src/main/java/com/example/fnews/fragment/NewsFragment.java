@@ -2,6 +2,7 @@ package com.example.fnews.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.fnews.R;
+import com.example.fnews.activity.NewsActivity;
 import com.example.fnews.adapter.NewsAdapter;
 import com.example.fnews.entity.NewsBean;
 import com.example.fnews.entity.NewsData;
@@ -90,10 +92,17 @@ public class NewsFragment extends Fragment {
                         List<NewsData> dataList = new ArrayList<>();
                         for (NewsBean.ResultBean.ListBean listBean : listBeans) {
                             dataList.add(new NewsData(listBean.getTitle(), listBean.getSrc(),
-                                    listBean.getTime(), listBean.getPic()));
+                                    listBean.getTime(), listBean.getPic(), listBean.getUrl(),
+                                    listBean.getWeburl()));
                         }
 
-                        NewsAdapter adapter = new NewsAdapter(getContext(), dataList);
+                        NewsAdapter adapter = new NewsAdapter(getContext(), dataList, new NewsAdapter.NewsListener() {
+                            @Override public void onClickItem(String url) {
+                                Intent intent = new Intent(getActivity(), NewsActivity.class);
+                                intent.putExtra(NewsActivity.KEY_URL, url);
+                                startActivity(intent);
+                            }
+                        });
                         mNewsRv.setAdapter(adapter);
                     }
 

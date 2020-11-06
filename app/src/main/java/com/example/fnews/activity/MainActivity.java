@@ -1,4 +1,4 @@
-package com.example.fnews;
+package com.example.fnews.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.fnews.R;
 import com.example.fnews.adapter.NewsPagerAdapter;
 import com.example.fnews.entity.NewsBean;
 import com.example.fnews.fragment.NewsFragment;

@@ -1,11 +1,13 @@
 package com.example.fnews.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -29,10 +31,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     private Context mContext;
     private List<NewsData> mNewsList;
+    private NewsListener mListener;
 
-    public NewsAdapter(Context context, List<NewsData> newsList) {
+    public NewsAdapter(Context context, List<NewsData> newsList, NewsListener listener) {
         mContext = context;
         mNewsList = newsList;
+        mListener = listener;
+    }
+
+    public interface NewsListener {
+        void onClickItem(String url);
     }
 
     @Override public void onClick(View view) {
@@ -43,7 +51,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         return new NewsViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_news, null));
     }
 
-    @Override public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
+    @Override public void onBindViewHolder(@NonNull NewsViewHolder holder, final int position) {
         holder.title.setText(mNewsList.get(position).getTitle());
         holder.src.setText(mNewsList.get(position).getSrc());
         holder.time.setText(getTime(mNewsList.get(position).getTime()));
@@ -59,6 +67,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         Glide.with(mContext)
                 .load(mNewsList.get(position).getPic())
                 .into(holder.pic);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                mListener.onClickItem(mNewsList.get(position).getUrl());
+            }
+        });
     }
 
     @Override public int getItemCount() {

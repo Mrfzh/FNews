@@ -9,12 +9,16 @@ public class NewsData {
     private String src;
     private String time;
     private String pic;
+    private String url;
+    private String webUrl;
 
-    public NewsData(String title, String src, String time, String pic) {
+    public NewsData(String title, String src, String time, String pic, String url, String webUrl) {
         this.title = title;
         this.src = src;
         this.time = time;
         this.pic = pic;
+        this.url = url;
+        this.webUrl = webUrl;
     }
 
     public String getTitle() {
@@ -47,5 +51,21 @@ public class NewsData {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getWebUrl() {
+        return webUrl;
+    }
+
+    public void setWebUrl(String webUrl) {
+        this.webUrl = webUrl;
     }
 }
