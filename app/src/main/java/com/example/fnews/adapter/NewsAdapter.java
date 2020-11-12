@@ -2,6 +2,7 @@ package com.example.fnews.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     }
 
     @Override public void onBindViewHolder(@NonNull NewsViewHolder holder, final int position) {
+        Log.i("fzh", "position = " + position +
+                ", title = " + mNewsList.get(position).getTitle());
+
         holder.title.setText(mNewsList.get(position).getTitle());
         holder.src.setText(mNewsList.get(position).getSrc());
         holder.time.setText(getTime(mNewsList.get(position).getTime()));

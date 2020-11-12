@@ -6,12 +6,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import com.example.fnews.R;
 import com.example.fnews.adapter.NewsPagerAdapter;
-import com.example.fnews.entity.NewsBean;
+import com.example.fnews.entity.ChannelBean;
 import com.example.fnews.fragment.NewsFragment;
 import com.example.fnews.http.OkhttpBuilder;
 import com.example.fnews.http.OkhttpCall;
@@ -32,13 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private List<Fragment> mFragmentList;   //碎片集合
-    private List<String> mPageTitleList;    //tab的标题
-
-    private static final int TAB_NUM = 3;   //标签数
-//    private List<String> mStrs = Arrays.asList("头条","新闻","国内","国际","政治","财经",
-//            "体育","娱乐","军事","教育","科技","NBA","股票","星座","女性","健康","育儿");
-
-    private List<String> mStrs = Arrays.asList("头条","新闻","国内");
+    private List<String> mChannelList;    //tab的标题
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,49 +45,59 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        initVariable();
+        requestChannel();
+    }
 
+    private void doInit() {
+        initViewPagerData();
         initView();
     }
 
-    private void initVariable() {
-        mFragmentList = new ArrayList<>();
-        for (int i = 0; i < TAB_NUM; i++) {
-            mFragmentList.add(NewsFragment.newInstance(mStrs.get(i)));
-        }
-
-        mPageTitleList = new ArrayList<>();
-        for (int i = 0; i < TAB_NUM; i++) {
-            mPageTitleList.add(mStrs.get(i));
-        }
-    }
-
-    private void initView() {
-        mViewPager = findViewById(R.id.vp_main_news_pager);
-        mViewPager.setAdapter(new NewsPagerAdapter(getSupportFragmentManager(), mFragmentList, mPageTitleList));
-
-        mTabLayout = findViewById(R.id.tl_main_news_tab);
-        mTabLayout.setupWithViewPager(mViewPager);  //将TabLayout与ViewPager关联
-    }
-
-    private void requestTest() {
-        String url = UrlObtainer.getNews("头条", 10, 0);
+    private void requestChannel() {
+        String url = UrlObtainer.getChannels();
         OkhttpBuilder builder = new OkhttpBuilder.Builder()
                 .setUrl(url)
                 .setOkhttpCall(new OkhttpCall() {
                     @Override
                     public void onResponse(String json) {   // 得到 json 数据
                         Gson gson = new Gson();
-                        NewsBean bean = gson.fromJson(json, NewsBean.class);
-                        Log.i("fzh", "beanTest, bean = " + bean);
+                        ChannelBean bean = gson.fromJson(json, ChannelBean.class);
+                        mChannelList = bean.getResult();
+                        if (mChannelList.isEmpty()) {
+                            mChannelList = Arrays.asList("头条","新闻","国内","国际","政治","财经",
+            "体育","娱乐","军事","教育","科技","NBA","股票","星座","女性","健康","育儿");
+                        }
+
+                        doInit();
                     }
 
                     @Override
                     public void onFailure(String errorMsg) {
                         Log.i("fzh", "beanTest, failed!");
+                        if (mChannelList.isEmpty()) {
+                            mChannelList = Arrays.asList("头条","新闻","国内","国际","政治","财经",
+                                    "体育","娱乐","军事","教育","科技","NBA","股票","星座","女性","健康","育儿");
+                        }
+
+                        doInit();
                     }
                 })
                 .build();
         OkhttpUtil.getRequest(builder);
+    }
+
+    private void initViewPagerData() {
+        mFragmentList = new ArrayList<>();
+        for (int i = 0; i < mChannelList.size(); i++) {
+            mFragmentList.add(NewsFragment.newInstance(mChannelList.get(i)));
+        }
+    }
+
+    private void initView() {
+        mViewPager = findViewById(R.id.vp_main_news_pager);
+        mViewPager.setAdapter(new NewsPagerAdapter(getSupportFragmentManager(), mFragmentList, mChannelList));
+
+        mTabLayout = findViewById(R.id.tl_main_news_tab);
+        mTabLayout.setupWithViewPager(mViewPager);  //将TabLayout与ViewPager关联
     }
 }

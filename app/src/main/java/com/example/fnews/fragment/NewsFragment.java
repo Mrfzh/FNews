@@ -40,10 +40,15 @@ public class NewsFragment extends Fragment {
 
     private RecyclerView mNewsRv;
 
+    private boolean mIsVisible;
+    private boolean mIsViewCreated;
+    private boolean mIsLoadData;
+
     /**
      * 返回碎片实例
      */
     public static NewsFragment newInstance(String channel) {
+        Log.i("fzh", "callbackTest, newInstance, channel = " + channel);
         NewsFragment fragment = new NewsFragment();
         //动态加载fragment，接受activity传入的值
         Bundle bundle = new Bundle();
@@ -62,23 +67,37 @@ public class NewsFragment extends Fragment {
 
     @Nullable @Override public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                                                  @Nullable Bundle savedInstanceState) {
+        Log.i("fzh", "callbackTest, onCreateView, channel = " + channel);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_news, null);
+        initView(view);
+        return view;
+    }
 
-        return LayoutInflater.from(getActivity()).inflate(R.layout.fragment_news, null);
+    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i("fzh", "callbackTest, onCreate, channel = " + channel);
+        super.onCreate(savedInstanceState);
     }
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        Log.i("fzh", "callbackTest, onActivityCreated, channel = " + channel);
         super.onActivityCreated(savedInstanceState);
-        initView();
-        requestNews();
     }
 
-    private void initView() {
-        mNewsRv = getActivity().findViewById(R.id.rv_news_list);
+    private void initView(View root) {
+        mNewsRv = root.findViewById(R.id.rv_news_list);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mNewsRv.setLayoutManager(linearLayoutManager);
+        mIsViewCreated = true;
+
+        if (mIsVisible && !mIsLoadData) {
+            requestNews();
+        }
     }
 
     private void requestNews() {
+        Log.i("fzh", "NewsFragment, requestNews, channel = " + channel);
+
         String url = UrlObtainer.getNews(channel, 40, 0);
         OkhttpBuilder builder = new OkhttpBuilder.Builder()
                 .setUrl(url)
@@ -96,6 +115,7 @@ public class NewsFragment extends Fragment {
                                     listBean.getWeburl()));
                         }
 
+
                         NewsAdapter adapter = new NewsAdapter(getContext(), dataList, new NewsAdapter.NewsListener() {
                             @Override public void onClickItem(String url) {
                                 Intent intent = new Intent(getActivity(), NewsActivity.class);
@@ -103,7 +123,13 @@ public class NewsFragment extends Fragment {
                                 startActivity(intent);
                             }
                         });
+
+                        // 滑到第二个 tab 时，mNewsRv 引用指向第一个 tab
+                        Log.i("fzh", "recyclerTest, fragment = " + this
+                                + ", recyclerview = " + mNewsRv + ", adapter = " + adapter);
                         mNewsRv.setAdapter(adapter);
+
+                        mIsLoadData = true;
                     }
 
                     @Override
@@ -113,5 +139,36 @@ public class NewsFragment extends Fragment {
                 })
                 .build();
         OkhttpUtil.getRequest(builder);
+    }
+
+    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        Log.i("fzh", "callbackTest, setUserVisibleHint, channel = " + channel +
+                ", setUserVisibleHint, isVisibleToUser = " + isVisibleToUser);
+
+        mIsVisible = isVisibleToUser;
+        if (isVisibleToUser && mIsViewCreated && !mIsLoadData) {
+            requestNews();
+        }
+    }
+
+    @Override public void onDestroyView() {
+        Log.i("fzh", "callbackTest, onDestroyView, channel = " + channel);
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.i("fzh", "callbackTest, onDestroy, channel = " + channel);
+        super.onDestroy();
+        mIsLoadData = false;
+        mIsViewCreated = false;
+    }
+
+    @Override
+    public void onDetach() {
+        Log.i("fzh", "callbackTest, onDetach, channel = " + channel);
+        super.onDetach();
     }
 }

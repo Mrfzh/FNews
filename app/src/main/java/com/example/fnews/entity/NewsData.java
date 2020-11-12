@@ -68,4 +68,15 @@ public class NewsData {
     public void setWebUrl(String webUrl) {
         this.webUrl = webUrl;
     }
+
+    @Override public String toString() {
+        return "NewsData{" +
+                "title='" + title + '\'' +
+                ", src='" + src + '\'' +
+                ", time='" + time + '\'' +
+                ", pic='" + pic + '\'' +
+                ", url='" + url + '\'' +
+                ", webUrl='" + webUrl + '\'' +
+                '}';
+    }
 }
