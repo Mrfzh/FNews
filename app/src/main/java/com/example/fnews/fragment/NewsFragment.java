@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.fnews.R;
 import com.example.fnews.activity.NewsActivity;
 import com.example.fnews.adapter.NewsAdapter;
+import com.example.fnews.db.DatabaseManager;
 import com.example.fnews.entity.NewsBean;
 import com.example.fnews.entity.NewsData;
 import com.example.fnews.http.OkhttpBuilder;
@@ -111,8 +112,7 @@ public class NewsFragment extends Fragment {
                         List<NewsData> dataList = new ArrayList<>();
                         for (NewsBean.ResultBean.ListBean listBean : listBeans) {
                             dataList.add(new NewsData(listBean.getTitle(), listBean.getSrc(),
-                                    listBean.getTime(), listBean.getPic(), listBean.getUrl(),
-                                    listBean.getWeburl()));
+                                    listBean.getTime(), listBean.getPic(), listBean.getUrl()));
                         }
 
 

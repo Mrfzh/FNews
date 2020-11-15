@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.fnews.R;
+import com.example.fnews.db.DatabaseManager;
 import com.example.fnews.entity.NewsData;
 
 import java.text.ParseException;
@@ -74,6 +75,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
+                saveHistory(mNewsList.get(position));
                 mListener.onClickItem(mNewsList.get(position).getUrl());
             }
         });
@@ -115,5 +117,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         }
 
         return "";
+    }
+
+
+    private void saveHistory(NewsData data) {
+        DatabaseManager.getInstance().deleteHistory(data.getUrl());
+        DatabaseManager.getInstance().insertHistory(data);
     }
 }

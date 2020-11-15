@@ -12,7 +12,10 @@ public class NewsData {
     private String url;
     private String webUrl;
 
-    public NewsData(String title, String src, String time, String pic, String url, String webUrl) {
+    public NewsData() {
+    }
+
+    public NewsData(String title, String src, String time, String pic, String url) {
         this.title = title;
         this.src = src;
         this.time = time;

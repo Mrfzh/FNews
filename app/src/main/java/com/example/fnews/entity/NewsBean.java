@@ -74,7 +74,6 @@ public class NewsBean {
             private String pic;
             private String content;
             private String url;
-            private String weburl;
 
             public String getTitle() {
                 return title;
@@ -130,27 +129,6 @@ public class NewsBean {
 
             public void setUrl(String url) {
                 this.url = url;
-            }
-
-            public String getWeburl() {
-                return weburl;
-            }
-
-            public void setWeburl(String weburl) {
-                this.weburl = weburl;
-            }
-
-            @Override public String toString() {
-                return "ListBean{" +
-                        "title='" + title + '\'' +
-                        ", time='" + time + '\'' +
-                        ", src='" + src + '\'' +
-                        ", category='" + category + '\'' +
-                        ", pic='" + pic + '\'' +
-                        ", content='" + content + '\'' +
-                        ", url='" + url + '\'' +
-                        ", weburl='" + weburl + '\'' +
-                        '}';
             }
         }
     }

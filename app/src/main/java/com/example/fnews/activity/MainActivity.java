@@ -1,12 +1,17 @@
 package com.example.fnews.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.fnews.R;
 import com.example.fnews.adapter.NewsPagerAdapter;
@@ -99,5 +104,28 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout = findViewById(R.id.tl_main_news_tab);
         mTabLayout.setupWithViewPager(mViewPager);  //将TabLayout与ViewPager关联
+    }
+
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.history:
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_2:
+                Toast.makeText(MainActivity.this,"Option 2",Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_3:
+                Toast.makeText(MainActivity.this,"Option 3",Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                //do nothing
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

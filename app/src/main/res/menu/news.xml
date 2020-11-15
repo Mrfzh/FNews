@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.android.peter.menudemo.MenuDemoActivity">
+
+    <item
+        android:id="@+id/reload"
+        android:orderInCategory="100"
+        android:title="刷新"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/open"
+        android:orderInCategory="100"
+        android:title="在浏览器打开"
+        app:showAsAction="never" />
+</menu>
