@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @author Feng Zhaohao
- * Created on 2019/11/11
+ * Created on 2020/11/15
  */
 public class DatabaseManager {
     private static final String TAG = "DatabaseManager";
@@ -44,6 +44,7 @@ public class DatabaseManager {
         values.put(DbConstant.TABLE_HISTORY_SRC, newsData.getSrc());
         values.put(DbConstant.TABLE_HISTORY_TIME, newsData.getTime());
         values.put(DbConstant.TABLE_HISTORY_PIC, newsData.getPic());
+        values.put(DbConstant.TABLE_HISTORY_CHANNEL, newsData.getChannel());
         values.put(DbConstant.TABLE_HISTORY_URL, newsData.getUrl());
         mDb.insert(DbConstant.TABLE_HISTORY, null, values);
     }
@@ -70,6 +71,7 @@ public class DatabaseManager {
                 newsData.setSrc(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_HISTORY_SRC)));
                 newsData.setTime(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_HISTORY_TIME)));
                 newsData.setPic(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_HISTORY_PIC)));
+                newsData.setChannel(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_HISTORY_CHANNEL)));
                 newsData.setUrl(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_HISTORY_URL)));
                 res.add(newsData);
             } while (cursor.moveToPrevious());
@@ -84,5 +86,55 @@ public class DatabaseManager {
      */
     public void deleteAllHistories() {
         mDb.delete(DbConstant.TABLE_HISTORY, null, null);
+    }
+
+    /**
+     * 插入一条新的推荐记录
+     */
+    public void insertRecommend(String channel) {
+        ContentValues values = new ContentValues();
+        values.put(DbConstant.TABLE_RECOMMEND_CHANNEL, channel);
+        mDb.insert(DbConstant.TABLE_RECOMMEND, null, values);
+    }
+
+    /**
+     * 查询推荐记录条数
+     */
+    public long getRecommendCount() {
+        String sql = "select count(*) from " + DbConstant.TABLE_RECOMMEND;
+        Cursor cursor = mDb.rawQuery(sql, null);
+        cursor.moveToFirst();
+        long count = cursor.getLong(0);
+        cursor.close();
+        return count;
+    }
+
+    /**
+     * 删除前 n 条推荐记录
+     */
+    public void deleteRecommend(int n) {
+        String sql = "delete from " + DbConstant.TABLE_RECOMMEND +
+                " where " + DbConstant.TABLE_RECOMMEND_ID + " in(" +
+                "select " + DbConstant.TABLE_RECOMMEND_ID + " from " + DbConstant.TABLE_RECOMMEND +
+                " order by " + DbConstant.TABLE_RECOMMEND_ID +
+                " limit " + n + ")";
+        mDb.execSQL(sql);
+    }
+
+    /**
+     * 查询所有推荐记录（较新的记录排前面）
+     */
+    public List<String> queryAllRecommend() {
+        List<String> res = new ArrayList<>();
+        Cursor cursor = mDb.query(DbConstant.TABLE_RECOMMEND, null, null,
+                null, null, null,null);
+        if (cursor.moveToLast()) {
+            do {
+                res.add(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_RECOMMEND_CHANNEL)));
+            } while (cursor.moveToPrevious());
+        }
+        cursor.close();
+
+        return res;
     }
 }

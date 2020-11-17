@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.HistoryActivity"></activity>
+        <activity android:name=".activity.RecommendActivity"></activity>
+        <activity android:name=".activity.HistoryActivity" />
         <activity android:name=".activity.NewsActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>

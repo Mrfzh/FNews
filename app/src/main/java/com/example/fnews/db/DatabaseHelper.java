@@ -21,17 +21,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + DbConstant.TABLE_HISTORY_SRC + " text, "
             + DbConstant.TABLE_HISTORY_TIME + " text, "
             + DbConstant.TABLE_HISTORY_PIC + " text, "
+            + DbConstant.TABLE_HISTORY_CHANNEL + " text, "
             + DbConstant.TABLE_HISTORY_URL + " text)";
 
-//    // 创建书架书籍信息表
-//    private static final String CREATE_TABLE_BOOKSHELF_NOVEL = "create table " + Constant.TABLE_BOOKSHELF_NOVEL
-//            + " (" + Constant.TABLE_BOOKSHELF_NOVEL_NOVEL_URL + " text primary key, "
-//            + Constant.TABLE_BOOKSHELF_NOVEL_NAME + " text, "
-//            + Constant.TABLE_BOOKSHELF_NOVEL_COVER + " text, "
-//            + Constant.TABLE_BOOKSHELF_NOVEL_CHAPTER_INDEX + " int, "
-//            + Constant.TABLE_BOOKSHELF_NOVEL_TYPE + " int, "
-//            + Constant.TABLE_BOOKSHELF_NOVEL_POSITION + " int, "
-//            + Constant.TABLE_BOOKSHELF_NOVEL_SECOND_POSITION + " int)";
+    // 创建推荐记录表
+    private static final String CREATE_TABLE_RECOMMEND = "create table " + DbConstant.TABLE_RECOMMEND
+            + " (" + DbConstant.TABLE_RECOMMEND_ID + " integer primary key autoincrement, "
+            + DbConstant.TABLE_RECOMMEND_CHANNEL + " text)";
+
 
     DatabaseHelper(Context context, String name,
                    SQLiteDatabase.CursorFactory factory, int version) {
@@ -41,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_HISTORY);
-//        db.execSQL(CREATE_TABLE_BOOKSHELF_NOVEL);
+        db.execSQL(CREATE_TABLE_RECOMMEND);
     }
 
     @Override

@@ -37,7 +37,6 @@ public class NewsBean {
     }
 
     public static class ResultBean {
-
         private String channel;
         private int num;
         private List<ListBean> list;
@@ -74,6 +73,7 @@ public class NewsBean {
             private String pic;
             private String content;
             private String url;
+            private String weburl;
 
             public String getTitle() {
                 return title;
@@ -130,14 +130,14 @@ public class NewsBean {
             public void setUrl(String url) {
                 this.url = url;
             }
-        }
-    }
 
-    @Override public String toString() {
-        return "NewsBean{" +
-                "status=" + status +
-                ", msg='" + msg + '\'' +
-                ", result=" + result +
-                '}';
+            public String getWeburl() {
+                return weburl;
+            }
+
+            public void setWeburl(String weburl) {
+                this.weburl = weburl;
+            }
+        }
     }
 }

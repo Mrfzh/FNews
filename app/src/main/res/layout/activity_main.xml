@@ -9,12 +9,9 @@
 
 <!--    <Button-->
 <!--        android:id="@+id/btn_main_test"-->
-<!--        android:layout_width="0dp"-->
+<!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:text="test"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+<!--        android:text="test" />-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tl_main_news_tab"

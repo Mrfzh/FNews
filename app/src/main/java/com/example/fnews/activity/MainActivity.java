@@ -1,20 +1,24 @@
 package com.example.fnews.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.fnews.R;
 import com.example.fnews.adapter.NewsPagerAdapter;
+import com.example.fnews.db.DatabaseManager;
 import com.example.fnews.entity.ChannelBean;
 import com.example.fnews.fragment.NewsFragment;
 import com.example.fnews.http.OkhttpBuilder;
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //        mTestBtn = findViewById(R.id.btn_main_test);
 //        mTestBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override public void onClick(View view) {
-//                requestTest();
+//                DatabaseManager.getInstance().deleteRecommend(2);
 //            }
 //        });
 
@@ -111,17 +115,17 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.history:
-                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+                return true;
+            case R.id.recommend:
+                Intent intent = new Intent(MainActivity.this, RecommendActivity.class);
+                String str = String.join("-", mChannelList);
+                intent.putExtra(RecommendActivity.KEY_RECOMMEND_CHANNELS, str);
                 startActivity(intent);
-                return true;
-            case R.id.action_2:
-                Toast.makeText(MainActivity.this,"Option 2",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.action_3:
-                Toast.makeText(MainActivity.this,"Option 3",Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 //do nothing

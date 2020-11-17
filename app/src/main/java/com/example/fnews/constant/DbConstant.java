@@ -16,5 +16,11 @@ public class DbConstant {
     public static final String TABLE_HISTORY_TIME = "TABLE_HISTORY_TIME";
     public static final String TABLE_HISTORY_PIC = "TABLE_HISTORY_PIC";
     public static final String TABLE_HISTORY_URL = "TABLE_HISTORY_URL";
+    public static final String TABLE_HISTORY_CHANNEL = "TABLE_HISTORY_CHANNEL";
 
+    // 推荐记录表
+    public static final String TABLE_RECOMMEND = "TABLE_RECOMMEND";
+    // 推荐记录表的记录
+    public static final String TABLE_RECOMMEND_ID = "TABLE_RECOMMEND_ID";
+    public static final String TABLE_RECOMMEND_CHANNEL = "TABLE_RECOMMEND_CHANNEL";
 }

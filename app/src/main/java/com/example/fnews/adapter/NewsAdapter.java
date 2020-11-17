@@ -61,14 +61,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.src.setText(mNewsList.get(position).getSrc());
         holder.time.setText(getTime(mNewsList.get(position).getTime()));
 
-//        mNovelCoverIv = findViewById(R.id.iv_novel_intro_novel_cover);
-//        Glide.with(this)
-//                .load(mNovelSourceData.getCover())
-//                .apply(new RequestOptions()
-//                        .placeholder(R.drawable.cover_place_holder)
-//                        .error(R.drawable.cover_error))
-//                .into(mNovelCoverIv);
-
         Glide.with(mContext)
                 .load(mNewsList.get(position).getPic())
                 .into(holder.pic);
@@ -76,6 +68,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 saveHistory(mNewsList.get(position));
+                DatabaseManager.getInstance().insertRecommend(mNewsList.get(position).getChannel());
                 mListener.onClickItem(mNewsList.get(position).getUrl());
             }
         });

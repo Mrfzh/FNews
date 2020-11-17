@@ -112,7 +112,7 @@ public class NewsFragment extends Fragment {
                         List<NewsData> dataList = new ArrayList<>();
                         for (NewsBean.ResultBean.ListBean listBean : listBeans) {
                             dataList.add(new NewsData(listBean.getTitle(), listBean.getSrc(),
-                                    listBean.getTime(), listBean.getPic(), listBean.getUrl()));
+                                    listBean.getTime(), listBean.getPic(), listBean.getUrl(), channel));
                         }
 
 

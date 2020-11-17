@@ -10,18 +10,18 @@ public class NewsData {
     private String time;
     private String pic;
     private String url;
-    private String webUrl;
+    private String channel;
 
     public NewsData() {
     }
 
-    public NewsData(String title, String src, String time, String pic, String url) {
+    public NewsData(String title, String src, String time, String pic, String url, String channel) {
         this.title = title;
         this.src = src;
         this.time = time;
         this.pic = pic;
         this.url = url;
-        this.webUrl = webUrl;
+        this.channel = channel;
     }
 
     public String getTitle() {
@@ -64,22 +64,11 @@ public class NewsData {
         this.url = url;
     }
 
-    public String getWebUrl() {
-        return webUrl;
+    public String getChannel() {
+        return channel;
     }
 
-    public void setWebUrl(String webUrl) {
-        this.webUrl = webUrl;
-    }
-
-    @Override public String toString() {
-        return "NewsData{" +
-                "title='" + title + '\'' +
-                ", src='" + src + '\'' +
-                ", time='" + time + '\'' +
-                ", pic='" + pic + '\'' +
-                ", url='" + url + '\'' +
-                ", webUrl='" + webUrl + '\'' +
-                '}';
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 }
