@@ -137,4 +137,73 @@ public class DatabaseManager {
 
         return res;
     }
+
+    /**
+     * 插入一条新的本地新闻记录
+     */
+    public void insertLocal(List<NewsData> newsDataList) {
+        ContentValues values = new ContentValues();
+        for (NewsData newsData : newsDataList) {
+            mDb.delete(DbConstant.TABLE_LOCAL,
+                    DbConstant.TABLE_LOCAL_TITLE + " = ?",
+                    new String[]{newsData.getTitle()});
+
+            values.put(DbConstant.TABLE_LOCAL_TITLE, newsData.getTitle());
+            values.put(DbConstant.TABLE_LOCAL_SRC, newsData.getSrc());
+            values.put(DbConstant.TABLE_LOCAL_TIME, newsData.getTime());
+            values.put(DbConstant.TABLE_LOCAL_PIC, newsData.getPic());
+            values.put(DbConstant.TABLE_LOCAL_CHANNEL, newsData.getChannel());
+            values.put(DbConstant.TABLE_LOCAL_URL, newsData.getUrl());
+            mDb.insert(DbConstant.TABLE_LOCAL, null, values);
+            values.clear();
+        }
+    }
+
+    /**
+     * 查询所有本地新闻记录（较新的记录排前面）
+     */
+    public List<NewsData> queryAllLocal() {
+        List<NewsData> res = new ArrayList<>();
+        Cursor cursor = mDb.query(DbConstant.TABLE_LOCAL, null, null,
+                null, null, null,null);
+        if (cursor.moveToLast()) {
+            do {
+                NewsData newsData = new NewsData();
+                newsData.setTitle(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_LOCAL_TITLE)));
+                newsData.setSrc(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_LOCAL_SRC)));
+                newsData.setTime(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_LOCAL_TIME)));
+                newsData.setPic(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_LOCAL_PIC)));
+                newsData.setChannel(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_LOCAL_CHANNEL)));
+                newsData.setUrl(cursor.getString(cursor.getColumnIndex(DbConstant.TABLE_LOCAL_URL)));
+                res.add(newsData);
+            } while (cursor.moveToPrevious());
+        }
+        cursor.close();
+
+        return res;
+    }
+
+    /**
+     * 删除前 n 条本地新闻记录
+     */
+    public void deleteLocal(int n) {
+        String sql = "delete from " + DbConstant.TABLE_RECOMMEND +
+                " where " + DbConstant.TABLE_RECOMMEND_ID + " in(" +
+                "select " + DbConstant.TABLE_RECOMMEND_ID + " from " + DbConstant.TABLE_RECOMMEND +
+                " order by " + DbConstant.TABLE_RECOMMEND_ID +
+                " limit " + n + ")";
+        mDb.execSQL(sql);
+    }
+
+    /**
+     * 查询本地新闻记录条数
+     */
+    public long getLocalCount() {
+        String sql = "select count(*) from " + DbConstant.TABLE_LOCAL;
+        Cursor cursor = mDb.rawQuery(sql, null);
+        cursor.moveToFirst();
+        long count = cursor.getLong(0);
+        cursor.close();
+        return count;
+    }
 }

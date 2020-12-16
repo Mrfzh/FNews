@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- search -->
+    <dimen name="search_back_and_search_text_margin_top">12dp</dimen>
+    <dimen name="search_back_and_search_text_height">46dp</dimen>
+    <dimen name="search_search_bar_margin_top">15dp</dimen>
+    <dimen name="search_search_bar_height">40dp</dimen>
+    <dimen name="search_search_bar_radius">30dp</dimen>
+
+</resources>

@@ -127,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(RecommendActivity.KEY_RECOMMEND_CHANNELS, str);
                 startActivity(intent);
                 return true;
+            case R.id.search:
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                return true;
             default:
                 //do nothing
         }

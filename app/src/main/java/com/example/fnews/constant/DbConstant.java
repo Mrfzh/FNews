@@ -7,6 +7,7 @@ package com.example.fnews.constant;
 public class DbConstant {
     // 数据库名
     public static final String DB_NAME = "FNews.db";
+
     // 历史记录表
     public static final String TABLE_HISTORY = "TABLE_HISTORY";
     // 历史记录表的记录
@@ -23,4 +24,15 @@ public class DbConstant {
     // 推荐记录表的记录
     public static final String TABLE_RECOMMEND_ID = "TABLE_RECOMMEND_ID";
     public static final String TABLE_RECOMMEND_CHANNEL = "TABLE_RECOMMEND_CHANNEL";
+
+    // 本地新闻表
+    public static final String TABLE_LOCAL = "TABLE_LOCAL";
+    // 本地新闻表的记录
+    public static final String TABLE_LOCAL_ID = "TABLE_LOCAL_ID";       // 自增 id（主键）
+    public static final String TABLE_LOCAL_TITLE = "TABLE_LOCAL_TITLE";
+    public static final String TABLE_LOCAL_SRC = "TABLE_LOCAL_SRC";
+    public static final String TABLE_LOCAL_TIME = "TABLE_LOCAL_TIME";
+    public static final String TABLE_LOCAL_PIC = "TABLE_LOCAL_PIC";
+    public static final String TABLE_LOCAL_URL = "TABLE_LOCAL_URL";
+    public static final String TABLE_LOCAL_CHANNEL = "TABLE_LOCAL_CHANNEL";
 }

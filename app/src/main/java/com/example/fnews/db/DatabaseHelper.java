@@ -29,6 +29,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + " (" + DbConstant.TABLE_RECOMMEND_ID + " integer primary key autoincrement, "
             + DbConstant.TABLE_RECOMMEND_CHANNEL + " text)";
 
+    // 创建本地新闻表
+    private static final String CREATE_TABLE_LOCAL = "create table " + DbConstant.TABLE_LOCAL
+            + " (" + DbConstant.TABLE_LOCAL_ID + " integer primary key autoincrement, "
+            + DbConstant.TABLE_LOCAL_TITLE + " text, "
+            + DbConstant.TABLE_LOCAL_SRC + " text, "
+            + DbConstant.TABLE_LOCAL_TIME + " text, "
+            + DbConstant.TABLE_LOCAL_PIC + " text, "
+            + DbConstant.TABLE_LOCAL_CHANNEL + " text, "
+            + DbConstant.TABLE_LOCAL_URL + " text)";
+
 
     DatabaseHelper(Context context, String name,
                    SQLiteDatabase.CursorFactory factory, int version) {
@@ -39,6 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_HISTORY);
         db.execSQL(CREATE_TABLE_RECOMMEND);
+        db.execSQL(CREATE_TABLE_LOCAL);
     }
 
     @Override

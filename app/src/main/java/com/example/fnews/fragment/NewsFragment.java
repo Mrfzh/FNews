@@ -109,12 +109,17 @@ public class NewsFragment extends Fragment {
                         NewsBean bean = gson.fromJson(json, NewsBean.class);
                         NewsBean.ResultBean result = bean.getResult();
                         List<NewsBean.ResultBean.ListBean> listBeans = result.getList();
-                        List<NewsData> dataList = new ArrayList<>();
+                        final List<NewsData> dataList = new ArrayList<>();
                         for (NewsBean.ResultBean.ListBean listBean : listBeans) {
                             dataList.add(new NewsData(listBean.getTitle(), listBean.getSrc(),
                                     listBean.getTime(), listBean.getPic(), listBean.getUrl(), channel));
                         }
 
+                        new Thread(new Runnable() {
+                            @Override public void run() {
+                                DatabaseManager.getInstance().insertLocal(dataList);
+                            }
+                        }).start();
 
                         NewsAdapter adapter = new NewsAdapter(getContext(), dataList, new NewsAdapter.NewsListener() {
                             @Override public void onClickItem(String url) {

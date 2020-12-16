@@ -3,4 +3,14 @@
     <color name="colorPrimary">@android:color/holo_blue_light</color>
     <color name="colorPrimaryDark">@android:color/holo_blue_dark</color>
     <color name="colorAccent">@android:color/holo_blue_light</color>
+
+    <!-- search -->
+    <color name="search_bg">#fdfdfd</color>
+
+    <color name="search_back_bg_pressed">#e1e1e1</color>
+    <color name="search_search_text_bg_pressed">#e1e1e1</color>
+    <color name="search_search_text">#333333</color>
+    <color name="search_search_bar_bg">#ececec</color>
+    <color name="search_search_cursor">@android:color/holo_blue_light</color>
+
 </resources>
