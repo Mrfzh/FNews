@@ -19,14 +19,14 @@ public class UrlObtainer {
         return "https://api.jisuapi.com/news/get?channel=" + channel +
                 "&start=" + start +
                 "&num=" + num +
-                "&appkey=f494dd063b8067b9";
+                "&appkey=def11146a1a6dc9e";
     }
 
     /**
      * 获取新闻频道
      */
     public static String getChannels() {
-        return "https://api.jisuapi.com/news/channel?appkey=f494dd063b8067b9";
+        return "https://api.jisuapi.com/news/channel?appkey=def11146a1a6dc9e";
     }
 
 }

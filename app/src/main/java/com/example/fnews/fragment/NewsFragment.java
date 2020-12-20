@@ -105,36 +105,40 @@ public class NewsFragment extends Fragment {
                 .setOkhttpCall(new OkhttpCall() {
                     @Override
                     public void onResponse(String json) {   // 得到 json 数据
-                        Gson gson = new Gson();
-                        NewsBean bean = gson.fromJson(json, NewsBean.class);
-                        NewsBean.ResultBean result = bean.getResult();
-                        List<NewsBean.ResultBean.ListBean> listBeans = result.getList();
-                        final List<NewsData> dataList = new ArrayList<>();
-                        for (NewsBean.ResultBean.ListBean listBean : listBeans) {
-                            dataList.add(new NewsData(listBean.getTitle(), listBean.getSrc(),
-                                    listBean.getTime(), listBean.getPic(), listBean.getUrl(), channel));
+                        try {
+                            Gson gson = new Gson();
+                            NewsBean bean = gson.fromJson(json, NewsBean.class);
+                            NewsBean.ResultBean result = bean.getResult();
+                            List<NewsBean.ResultBean.ListBean> listBeans = result.getList();
+                            final List<NewsData> dataList = new ArrayList<>();
+                            for (NewsBean.ResultBean.ListBean listBean : listBeans) {
+                                dataList.add(new NewsData(listBean.getTitle(), listBean.getSrc(),
+                                        listBean.getTime(), listBean.getPic(), listBean.getUrl(), channel));
+                            }
+
+                            new Thread(new Runnable() {
+                                @Override public void run() {
+                                    DatabaseManager.getInstance().insertLocal(dataList);
+                                }
+                            }).start();
+
+                            NewsAdapter adapter = new NewsAdapter(getContext(), dataList, new NewsAdapter.NewsListener() {
+                                @Override public void onClickItem(String url) {
+                                    Intent intent = new Intent(getActivity(), NewsActivity.class);
+                                    intent.putExtra(NewsActivity.KEY_URL, url);
+                                    startActivity(intent);
+                                }
+                            });
+
+                            // 滑到第二个 tab 时，mNewsRv 引用指向第一个 tab
+                            Log.i("fzh", "recyclerTest, fragment = " + this
+                                    + ", recyclerview = " + mNewsRv + ", adapter = " + adapter);
+                            mNewsRv.setAdapter(adapter);
+
+                            mIsLoadData = true;
+                        } catch (Throwable t) {
+                            t.printStackTrace();
                         }
-
-                        new Thread(new Runnable() {
-                            @Override public void run() {
-                                DatabaseManager.getInstance().insertLocal(dataList);
-                            }
-                        }).start();
-
-                        NewsAdapter adapter = new NewsAdapter(getContext(), dataList, new NewsAdapter.NewsListener() {
-                            @Override public void onClickItem(String url) {
-                                Intent intent = new Intent(getActivity(), NewsActivity.class);
-                                intent.putExtra(NewsActivity.KEY_URL, url);
-                                startActivity(intent);
-                            }
-                        });
-
-                        // 滑到第二个 tab 时，mNewsRv 引用指向第一个 tab
-                        Log.i("fzh", "recyclerTest, fragment = " + this
-                                + ", recyclerview = " + mNewsRv + ", adapter = " + adapter);
-                        mNewsRv.setAdapter(adapter);
-
-                        mIsLoadData = true;
                     }
 
                     @Override

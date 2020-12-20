@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private List<Fragment> mFragmentList;   //碎片集合
-    private List<String> mChannelList;    //tab的标题
+    private List<String> mChannelList = new ArrayList<>();    //tab的标题
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,12 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        requestChannel();
+        try {
+            requestChannel();
+        } catch (Throwable t) {
+            mChannelList = Arrays.asList("头条","新闻","国内","国际","政治","财经",
+                    "体育","娱乐","军事","教育","科技","NBA","股票","星座","女性","健康","育儿");
+        }
     }
 
     private void doInit() {
@@ -69,15 +74,20 @@ public class MainActivity extends AppCompatActivity {
                 .setOkhttpCall(new OkhttpCall() {
                     @Override
                     public void onResponse(String json) {   // 得到 json 数据
-                        Gson gson = new Gson();
-                        ChannelBean bean = gson.fromJson(json, ChannelBean.class);
-                        mChannelList = bean.getResult();
-                        if (mChannelList.isEmpty()) {
-                            mChannelList = Arrays.asList("头条","新闻","国内","国际","政治","财经",
-            "体育","娱乐","军事","教育","科技","NBA","股票","星座","女性","健康","育儿");
-                        }
+                        try {
+                            Gson gson = new Gson();
+                            ChannelBean bean = gson.fromJson(json, ChannelBean.class);
+                            mChannelList = bean.getResult();
 
-                        doInit();
+                            if (mChannelList.isEmpty()) {
+                                mChannelList = Arrays.asList("头条","新闻","国内","国际","政治","财经",
+                                        "体育","娱乐","军事","教育","科技","NBA","股票","星座","女性","健康","育儿");
+                            }
+
+                            doInit();
+                        } catch (Throwable t) {
+                            t.printStackTrace();
+                        }
                     }
 
                     @Override
